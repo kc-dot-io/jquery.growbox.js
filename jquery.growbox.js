@@ -1,7 +1,7 @@
 
 if(typeof jQuery != "undefined" ) {
 
-    $fn.growBox = function() {
+    $.fn.growBox = function() {
 
         var el = $(this).css('resize','none')
           , oh = $(el).data('original-height');
