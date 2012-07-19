@@ -3,7 +3,7 @@
 ```javascript
 
     // on init it will initialize for keyup keydown and focus
-    $(el).growBox();
+    $('textarea').growBox();
 
     // if you change the content dynamically there are a few ways ...
     $.ajax({ /* ... */, onSuccess: $.fn.growBox.apply(el)  });
