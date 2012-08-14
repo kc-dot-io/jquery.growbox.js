@@ -1,13 +1,15 @@
-
-if(typeof jQuery != "undefined" ) {
-
-    (function($){
-
-        $.fn.growBox = function(options) {
+(function($){
+    $.extend({
+        growBox: function(options) {
 
             options = $.extend({ filter: 'textarea', growth: 10, char_width: 8, onResize: function() {} }, options);
 
             var grow = function(e) {
+
+                if ( typeof $(this).data('original-height') == "undefined"  ) {
+                    $(this).css('resize','none')
+                    $(this).data('original-height', $(this).outerHeight());
+                }
 
                 var lh = Math.ceil( parseInt( $(this).css('line-height') ) )
                   , nl = $(this).val().split('\n').length
@@ -25,19 +27,16 @@ if(typeof jQuery != "undefined" ) {
 
                 if(!e) return;
                 return options.onResize.apply(this);
+
             }
 
-            if ( typeof $(this).data('original-height') == "undefined"  ) {
-                $(this).css('resize','none')
-                $(this).data('original-height', $(this).outerHeight());
-                $(document).on('keyup keydown keypress focus', options.filter, grow);
-            }
+            $(document).off('keyup.growbox keydown.growbox keypress.growbox focus.growbox');
+            $(document).on('keyup.growbox keydown.growbox keypress.growbox focus.growbox', options.filter, grow);
 
-            return grow.apply(this);
+            $(options.filter).each(function(){
+                grow.apply(this);
+            });
 
-        };
-
-    })(jQuery);
-
-}
-
+        }
+    });
+})(jQuery);
